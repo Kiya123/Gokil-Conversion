@@ -1,0 +1,21 @@
+# **👥 Pembagian Tugas (Separation of Concern)**
+
+Biar pembagian kerja lu dan Azkiya kelihatan profesional di mata Ibu Lilis.
+
+## **🛠️ Dier (Lead System Architect & Front-End)**
+
+* **System Design:** Merancang alur komunikasi antar *node* dan topologi jaringan.  
+* **Front-End Development:** Membangun UI menggunakan **Tailwind CSS** agar terlihat modern dan *responsive*.  
+* **Client-Side Logic:** Menulis script **Asynchronous Fetch** untuk pengiriman payload gambar ke server.  
+* **Network Setup:** Bertanggung jawab atas konektivitas antar perangkat dan bypass firewall.
+
+## **⚙️ Azkiya (Lead Back-End & Database)**
+
+* **API Development:** Membangun **REST API** menggunakan PHP murni untuk menangani *upload* dan *processing*.  
+* **Data Processing Logic:** Mengimplementasikan **GD Library** untuk konversi dan kompresi gambar di sisi server.  
+* **Database Design:** Merancang skema tabel MySQL untuk mencatat metadata pemrosesan data.  
+* **Server Management:** Mengelola konfigurasi Apache dan MySQL di lingkungan **XAMPP**.
+
+### **💡 Justifikasi buat Dosen:**
+
+"Kami menerapkan **Separation of Concern** secara ekstrem untuk mensimulasikan lingkungan industri, di mana tim *Front-end* dan *Back-end* bekerja di *environment* (Node) yang berbeda namun terintegrasi melalui protokol HTTP."
