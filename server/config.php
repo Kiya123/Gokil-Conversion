@@ -27,7 +27,8 @@ define('UPLOAD_DIR', __DIR__ . '/uploads/');
 // ⚠️ WAJIB DIUPDATE sesuai mode koneksi yang dipakai:
 //   - LAN lokal : 'http://192.168.x.x/gokil-conversion/server/uploads/'
 //   - Ngrok     : 'https://xxxx.ngrok-free.app/gokil-conversion/server/uploads/'
-define('UPLOAD_URL_BASE', 'https://b77b-140-213-10-149.ngrok-free.app/gokil-conversion/server/uploads/');
+define("NGROK_URL", "https://70fd-140-213-10-149.ngrok-free.app");
+define('UPLOAD_URL_BASE', NGROK_URL . '/gokil-conversion/server/uploads/');
 
 
 // =============================================
