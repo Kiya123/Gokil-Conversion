@@ -80,7 +80,8 @@ curl_setopt_array($ch, [
 $response  = curl_exec($ch);
 $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $curlError = curl_error($ch);
-curl_close($ch);
+// curl_close() dihapus — CurlHandle otomatis di-free saat out of scope (PHP 8.0+)
+
 
 // =============================================
 //  HANDLE RESPONSE DARI SERVER

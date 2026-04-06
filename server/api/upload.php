@@ -150,7 +150,8 @@ $saveResult = match($targetFormat) {
     default => false,
 };
 
-imagedestroy($sourceImage);
+// imagedestroy() dihapus — GdImage di-free otomatis saat out of scope (PHP 8.0+)
+
 
 if (!$saveResult) {
     jsonError('GD Library gagal menyimpan file hasil konversi.', 500);

@@ -35,6 +35,8 @@ foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line)
 
 // =============================================
 //  RESOLVE CONFIG DARI ENV
+//  Nilai dari $_ENV harus tetap pakai define() — bukan const.
+//  Alasan: const butuh compile-time value, sedangkan $_ENV dibaca runtime.
 // =============================================
 
 $mode = $_ENV['CONNECTION_MODE'] ?? 'local';
@@ -61,12 +63,13 @@ define('ACTIVE_SERVER_LABEL',
 
 // =============================================
 //  FILE VALIDATION
+//  Nilai literal statis → pakai const (compile-time safe)
 // =============================================
 define('MAX_FILE_SIZE_MB', (int)($_ENV['MAX_FILE_SIZE_MB'] ?? 10));
 define('MAX_FILE_SIZE',    MAX_FILE_SIZE_MB * 1024 * 1024);
 
-define('ALLOWED_INPUT_FORMATS',  ['jpg', 'jpeg', 'png', 'webp']);
-define('ALLOWED_OUTPUT_FORMATS', ['jpg', 'png', 'webp']);
+const ALLOWED_INPUT_FORMATS  = ['jpg', 'jpeg', 'png', 'webp'];
+const ALLOWED_OUTPUT_FORMATS = ['jpg', 'png', 'webp'];
 
 // =============================================
 //  CURL TIMEOUT
