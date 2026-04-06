@@ -16,7 +16,7 @@
 // =============================================
 //  ★ TOGGLE DI SINI — 'local' atau 'ngrok'
 // =============================================
-define('CONNECTION_MODE', 'local');
+define('CONNECTION_MODE', 'ngrok');
 
 // =============================================
 //  MODE 1: LOCAL — LAN via Hotspot HP
@@ -34,8 +34,8 @@ define('LOCAL_ENDPOINT',    'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_POR
 //   2. Copy URL yang muncul (misal: https://xxxx-xx-xx.ngrok-free.app)
 //   3. Paste ke NGROK_BASE_URL di bawah (tanpa trailing slash)
 // =============================================
-define('NGROK_BASE_URL',  'https://xxxx-xxxx-xxxx.ngrok-free.app');  // ← Ganti tiap sesi ngrok baru
-define('NGROK_ENDPOINT',  NGROK_BASE_URL . '/server/api/upload.php');
+define('NGROK_BASE_URL',  'https://b77b-140-213-10-149.ngrok-free.app');  // ← Ganti tiap sesi ngrok baru
+define('NGROK_ENDPOINT',  NGROK_BASE_URL . '/gokil-conversion/server/api/upload.php');
 
 // =============================================
 //  RESOLVE ENDPOINT AKTIF (jangan diubah)

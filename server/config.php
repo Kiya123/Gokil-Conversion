@@ -24,8 +24,11 @@ define('DB_PASS', '');      // Default XAMPP kosong, ubah kalau udah di-set
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
 
 // URL publik untuk akses file hasil konversi
-// Ganti dengan IP Azkiya saat demo, misal: http://192.168.1.100/server/uploads/
-define('UPLOAD_URL_BASE', 'http://localhost/server/uploads/');
+// ⚠️ WAJIB DIUPDATE sesuai mode koneksi yang dipakai:
+//   - LAN lokal : 'http://192.168.x.x/gokil-conversion/server/uploads/'
+//   - Ngrok     : 'https://xxxx.ngrok-free.app/gokil-conversion/server/uploads/'
+define('UPLOAD_URL_BASE', 'https://b77b-140-213-10-149.ngrok-free.app/gokil-conversion/server/uploads/');
+
 
 // =============================================
 //  FILE VALIDATION
