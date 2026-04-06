@@ -3,36 +3,14 @@
 /**
  * config.php — Client Configuration
  *
- * Semua config dibaca dari file .env di folder ini.
+ * Load .env dan resolve semua konstanta yang dipakai client.
  * Cara setup: copy .env.example → .env, lalu isi nilainya.
  * Cara jalankan: php -S localhost:3000 (dari folder /client)
  */
 
-// =============================================
-//  ENV LOADER — parser .env sederhana
-// =============================================
+require_once __DIR__ . '/../lib/env_loader.php';
 
-$envPath = __DIR__ . '/../.env';  // .env ada di /client/, satu level di atas /api/
-
-
-if (!file_exists($envPath)) {
-    die(
-        "<pre style='font-family:monospace;padding:20px;background:#1a1a2e;color:#ef4444;'>" .
-        "⚠️  File .env tidak ditemukan!\n\n" .
-        "Jalankan perintah ini di folder /client:\n" .
-        "  cp .env.example .env\n\n" .
-        "Lalu edit .env sesuai kebutuhan.\n" .
-        "</pre>"
-    );
-}
-
-foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-    $line = trim($line);
-    if ($line === '' || str_starts_with($line, '#')) continue;
-    if (!str_contains($line, '=')) continue;
-    [$key, $val] = explode('=', $line, 2);
-    $_ENV[trim($key)] = trim($val);
-}
+loadEnv(__DIR__ . '/../.env');
 
 // =============================================
 //  RESOLVE CONFIG DARI ENV

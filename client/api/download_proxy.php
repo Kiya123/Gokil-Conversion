@@ -7,10 +7,11 @@
  * via cURL dengan header ngrok-skip-browser-warning, lalu stream
  * balik ke browser sebagai attachment download.
  *
- * Usage: /download_proxy.php?file=nama_file.webp
+ * Usage: /api/download_proxy.php?file=nama_file.webp
  */
 
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/../lib/curl_client.php';
 
 // =============================================
 //  VALIDASI PARAM
@@ -30,7 +31,6 @@ if (str_contains($filename, "\0") || $filename === '') {
     die('Nama file tidak valid.');
 }
 
-// Cek ekstensi file (hanya format gambar yang diizinkan)
 $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
     http_response_code(400);
@@ -41,49 +41,34 @@ if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
 //  BUILD URL FILE DI SERVER
 // =============================================
 
-// Encode spasi di nama file agar URL valid
 $encodedFilename = rawurlencode($filename);
 
-if (CONNECTION_MODE === 'ngrok') {
-    $fileUrl = NGROK_BASE_URL . '/gokil-conversion/server/uploads/' . $encodedFilename;
-} else {
-    $fileUrl = 'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/gokil-conversion/server/uploads/' . $encodedFilename;
-}
+$fileUrl = CONNECTION_MODE === 'ngrok'
+    ? NGROK_BASE_URL . '/gokil-conversion/server/uploads/' . $encodedFilename
+    : 'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/gokil-conversion/server/uploads/' . $encodedFilename;
 
 // =============================================
-//  FETCH FILE VIA CURL
+//  FETCH & STREAM FILE
 // =============================================
 
-$ch = curl_init($fileUrl);
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT        => CURL_TIMEOUT_SEC,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTPHEADER     => [
-        'ngrok-skip-browser-warning: true',  // Bypass ngrok warning page
+$result = curlGet(
+    url: $fileUrl,
+    headers: [
+        'ngrok-skip-browser-warning: true',
         'User-Agent: GC-DownloadProxy/1.0',
     ],
-]);
+    timeout: CURL_TIMEOUT_SEC
+);
 
-$fileData  = curl_exec($ch);
-$httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$curlError = curl_error($ch);
-// curl_close() dihapus — CurlHandle otomatis di-free saat out of scope (PHP 8.0+)
-
-
-if ($fileData === false || !empty($curlError)) {
+if ($result['body'] === false || !empty($result['error'])) {
     http_response_code(502);
-    die("Gagal fetch file dari server: $curlError");
+    die("Gagal fetch file dari server: {$result['error']}");
 }
 
-if ($httpCode !== 200) {
+if ($result['status'] !== 200) {
     http_response_code(502);
-    die("Server merespons HTTP $httpCode untuk file yang diminta.");
+    die("Server merespons HTTP {$result['status']} untuk file yang diminta.");
 }
-
-// =============================================
-//  STREAM KE BROWSER SEBAGAI DOWNLOAD
-// =============================================
 
 $safeMime = match($ext) {
     'jpg', 'jpeg' => 'image/jpeg',
@@ -94,7 +79,7 @@ $safeMime = match($ext) {
 
 header('Content-Type: ' . $safeMime);
 header('Content-Disposition: attachment; filename="' . $filename . '"');
-header('Content-Length: ' . strlen($fileData));
+header('Content-Length: ' . strlen($result['body']));
 header('Cache-Control: no-cache, no-store, must-revalidate');
 
-echo $fileData;
+echo $result['body'];
