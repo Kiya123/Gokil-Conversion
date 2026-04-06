@@ -12,7 +12,8 @@
 //  ENV LOADER — parser .env sederhana
 // =============================================
 
-$envPath = __DIR__ . '/.env';
+$envPath = __DIR__ . '/../.env';  // .env ada di /client/, satu level di atas /api/
+
 
 if (!file_exists($envPath)) {
     die(

@@ -4,7 +4,7 @@
  * Flow:
  *  1. User drag/drop atau pilih file → preview
  *  2. User pilih target format
- *  3. Click convert → POST ke upload_handler.php (PHP proxy di localhost)
+ *  3. Click convert → POST ke api/upload_handler.php (PHP proxy di localhost)
  *  4. PHP proxy forward ke server Azkiya via cURL
  *  5. Tampilkan result atau error
  */
@@ -182,7 +182,7 @@ btnConvert.addEventListener('click', async () => {
   formData.append('target_format', selectedFormat);
 
   try {
-    const res = await fetch('upload_handler.php', {
+    const res = await fetch('api/upload_handler.php', {
       method: 'POST',
       body: formData,
     });
@@ -233,7 +233,7 @@ function showResult(data) {
 
   // Arahkan ke proxy lokal (localhost) bukan langsung ke ngrok
   // Ini bypass ngrok browser warning dan langsung trigger download
-  const proxyUrl = `download_proxy.php?file=${encodeURIComponent(data.converted_filename)}`;
+  const proxyUrl = `api/download_proxy.php?file=${encodeURIComponent(data.converted_filename)}`;
   btnDownload.href = proxyUrl;
   btnDownload.removeAttribute('target'); // jangan buka tab baru
 
