@@ -1,0 +1,5 @@
+# Folder ini menyimpan hasil konversi gambar dari server.
+# File di dalam folder ini di-ignore dari Git (kecuali .gitkeep ini).
+*
+!.gitkeep
+!.gitignore
