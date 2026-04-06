@@ -2,17 +2,19 @@
 
 /**
  * config.php — Client Configuration
- * 
- * Ganti SERVER_IP dengan IP laptop Azkiya di jaringan lokal.
- * Cara cari IP Azkiya: CMD → ipconfig → IPv4 Address
+ *
+ * Cara pakai:
+ *   1. Ganti SERVER_IP dengan IP laptop Azkiya di jaringan lokal
+ *   2. Cara cari IP Azkiya: CMD → ipconfig → Cari 'IPv4 Address'
+ *   3. Jalankan client: php -S localhost:3000 (dari folder /client)
  */
 
 // =============================================
 //  NETWORK CONFIG — WAJIB DIUPDATE SEBELUM DEMO
 // =============================================
-define('SERVER_IP',       '192.168.1.100');
+define('SERVER_IP',       '127.0.0.1');  // Ganti ke IP Azkiya saat demo (misal: 192.168.1.100)
 define('SERVER_PORT',     80);
-define('SERVER_ENDPOINT', "http://" . SERVER_IP . ":" . SERVER_PORT . "/server/api/upload.php");
+define('SERVER_ENDPOINT', 'http://' . SERVER_IP . ':' . SERVER_PORT . '/server/api/upload.php');
 
 // =============================================
 //  FILE VALIDATION
