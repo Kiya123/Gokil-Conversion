@@ -27,7 +27,7 @@
       </div>
       <div class="header-badge">
         <span class="badge-dot"></span>
-        Distributed System
+        <?= CONNECTION_MODE === 'ngrok' ? 'Ngrok Tunnel' : 'LAN · Hotspot' ?>
       </div>
     </header>
 
@@ -195,13 +195,13 @@
         </div>
         <div class="arch-arrow">
           <div class="arrow-line"></div>
-          <span class="arrow-label">HTTP · LAN</span>
+          <span class="arrow-label"><?= CONNECTION_MODE === 'ngrok' ? 'HTTPS · Ngrok' : 'HTTP · LAN' ?></span>
         </div>
         <div class="arch-node">
           <div class="node-dot server-dot"></div>
           <div class="node-info">
             <span class="node-label">Node 2 — Server</span>
-            <span class="node-detail">PHP + MySQL (<?= SERVER_IP ?>:<?= SERVER_PORT ?>)</span>
+            <span class="node-detail"><?= htmlspecialchars(ACTIVE_SERVER_LABEL) ?></span>
           </div>
         </div>
       </div>
