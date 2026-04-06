@@ -23,9 +23,9 @@ if (empty($filename)) {
     die('Parameter "file" tidak ada.');
 }
 
-// Sanitasi: izinkan huruf, angka, spasi, underscore, dash, titik (cegah path traversal)
+// basename() sudah handle path traversal — cukup block null byte
 $filename = basename($filename);
-if (!preg_match('/^[\w\-\. ]+$/u', $filename)) {
+if (str_contains($filename, "\0") || $filename === '') {
     http_response_code(400);
     die('Nama file tidak valid.');
 }
