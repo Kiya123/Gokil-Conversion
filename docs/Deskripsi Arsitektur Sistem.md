@@ -4,9 +4,9 @@ Gunakan deskripsi ini sebagai panduan menggambar diagram. Ingat: **Node** adalah
 
 ## **🏢 Node 1: Client Side (Laptop Dier)**
 
-* **Komponen:** Web Browser & Node.js Server.  
-* **Fungsi:** Menyediakan UI dan memicu **Request** awal.  
-* **Environment:** Menjalankan script **Asynchronous Fetch**.
+* **Komponen:** PHP CLI (Command-Line Interface).  
+* **Fungsi:** Menyediakan logika client dan memicu **Request** awal ke server.  
+* **Environment:** Menjalankan script PHP via terminal yang menggunakan **cURL** untuk HTTP request.
 
 ## **🏢 Node 2: Server Side (Laptop Azkiya)**
 

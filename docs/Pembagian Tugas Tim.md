@@ -2,11 +2,11 @@
 
 Biar pembagian kerja lu dan Azkiya kelihatan profesional di mata Ibu Lilis.
 
-## **🛠️ Dier (Lead System Architect & Front-End)**
+## **🛠️ Dier (Lead System Architect & Client-Side)**
 
 * **System Design:** Merancang alur komunikasi antar *node* dan topologi jaringan.  
-* **Front-End Development:** Membangun UI menggunakan **Tailwind CSS** agar terlihat modern dan *responsive*.  
-* **Client-Side Logic:** Menulis script **Asynchronous Fetch** untuk pengiriman payload gambar ke server.  
+* **Client Development:** Membangun script **PHP CLI** yang berjalan di terminal — bukan browser.  
+* **HTTP Communication:** Mengimplementasikan **cURL** di PHP buat kirim `multipart/form-data` ke server Azkiya.  
 * **Network Setup:** Bertanggung jawab atas konektivitas antar perangkat dan bypass firewall.
 
 ## **⚙️ Azkiya (Lead Back-End & Database)**

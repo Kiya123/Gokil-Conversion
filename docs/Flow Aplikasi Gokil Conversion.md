@@ -2,12 +2,12 @@
 
 Gue pecah alurnya jadi 4 fase utama. Fokus pada **perpindahan data** antar laptop biar poin "Distributed" lu dapet nilai maksimal.
 
-## **💻 1\. Fase Client (Laptop Dier)**
+## **💻 1\. Fase Client (Laptop Dier — PHP CLI)**
 
-* **Input User:** User pilih foto dari lokal (Laptop Dier).  
-* **Front-End Validation:** JS lu ngecek ukuran file dan format (biar server Azkiya nggak meledak).  
-* **Packaging Payload:** Gambar dibungkus jadi **FormData**.  
-* **Dispatch:** Fetch API nembak IP Laptop Azkiya (via config.js) pakai metode POST.
+* **Input User:** User run script PHP via terminal, path file gambar dilempar sebagai argumen.  
+* **Validasi Lokal:** Script PHP ngecek eksistensi file, ukuran, dan format sebelum dikirim.  
+* **Packaging Payload:** Gambar dimasukkan ke dalam `multipart/form-data` request pakai **cURL**.  
+* **Dispatch:** Script PHP nembak IP Laptop Azkiya (via `config.php`) pakai metode POST melalui **cURL**.
 
 ## **🌐 2\. Fase Network (The "Distributed" Bridge)**
 

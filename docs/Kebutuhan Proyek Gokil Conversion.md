@@ -5,9 +5,9 @@ Daftar *tools* dan infrastruktur minimal buat jalanin proyek terdistribusi ini d
 ## **💻 1\. Node 1: Client (Laptop Dier)**
 
 * **OS:** Windows 10/11 (Dual Boot).  
-* **Node.js:** Dipakai murni buat *serving* file statis (HTML/JS) via port 3000\.  
+* **PHP CLI:** Dipakai buat menjalankan script client secara langsung via terminal (tanpa web server). PHP harus sudah ter-install dan bisa dipanggil dari CMD/PowerShell.  
+* **cURL Extension:** Wajib aktif di `php.ini` — dipakai script PHP buat kirim HTTP request ke server Azkiya.  
 * **VS Code / Cursor:** *Code editor* utama.  
-* **Web Browser:** Chrome/Firefox (Wajib pake *Network Tab* buat pamer *distributed fetch*).  
 * **Git for Windows:** Buat sinkronisasi kode ke GitHub.
 
 ## **🖥️ 2\. Node 2: Server & DB (Laptop Azkiya)**
