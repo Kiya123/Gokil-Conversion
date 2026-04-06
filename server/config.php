@@ -2,45 +2,69 @@
 
 /**
  * config.php — Server Configuration
- * 
- * File ini ada di laptop Azkiya (atau XAMPP lokal sementara).
- * Jangan push credential ini ke GitHub — idealnya pindah ke .env.
+ *
+ * Semua config dibaca dari file .env di folder ini.
+ * Cara setup: copy .env.example → .env, lalu isi nilainya.
  */
 
 // =============================================
-//  DATABASE CONFIG (MySQL via XAMPP)
+//  ENV LOADER — parser .env sederhana
 // =============================================
-define('DB_HOST', 'localhost');
-define('DB_PORT', 3306);
-define('DB_NAME', 'gokil_conversion');
-define('DB_USER', 'root');
-define('DB_PASS', '');      // Default XAMPP kosong, ubah kalau udah di-set
+
+$envPath = __DIR__ . '/.env';
+
+if (!file_exists($envPath)) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    die(json_encode([
+        'success' => false,
+        'message' => 'Server misconfigured: file .env tidak ditemukan. Jalankan: cp .env.example .env'
+    ]));
+}
+
+foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+    $line = trim($line);
+    if ($line === '' || str_starts_with($line, '#')) continue;
+    if (!str_contains($line, '=')) continue;
+    [$key, $val] = explode('=', $line, 2);
+    $_ENV[trim($key)] = trim($val);
+}
+
+// =============================================
+//  DATABASE CONFIG
+// =============================================
+define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
+define('DB_PORT', (int)($_ENV['DB_PORT'] ?? 3306));
+define('DB_NAME', $_ENV['DB_NAME'] ?? 'gokil_conversion');
+define('DB_USER', $_ENV['DB_USER'] ?? 'root');
+define('DB_PASS', $_ENV['DB_PASS'] ?? '');
 
 // =============================================
 //  FILE STORAGE
 // =============================================
 
-// Path absolut ke folder uploads (di dalam /server/)
 define('UPLOAD_DIR', __DIR__ . '/uploads/');
 
-// URL publik untuk akses file hasil konversi
-// ⚠️ WAJIB DIUPDATE sesuai mode koneksi yang dipakai:
-//   - LAN lokal : 'http://192.168.x.x/gokil-conversion/server/uploads/'
-//   - Ngrok     : 'https://xxxx.ngrok-free.app/gokil-conversion/server/uploads/'
-define("NGROK_URL", "https://70fd-140-213-10-149.ngrok-free.app");
-define('UPLOAD_URL_BASE', NGROK_URL . '/gokil-conversion/server/uploads/');
+// Resolve UPLOAD_URL_BASE berdasarkan mode koneksi
+$mode = $_ENV['CONNECTION_MODE'] ?? 'local';
+define('CONNECTION_MODE', $mode);
 
+if ($mode === 'ngrok') {
+    $ngrokUrl = rtrim($_ENV['NGROK_URL'] ?? '', '/');
+    define('UPLOAD_URL_BASE', $ngrokUrl . '/gokil-conversion/server/uploads/');
+} else {
+    define('UPLOAD_URL_BASE', rtrim($_ENV['LOCAL_UPLOAD_URL'] ?? 'http://localhost/gokil-conversion/server/uploads/', '/') . '/');
+}
 
 // =============================================
 //  FILE VALIDATION
 // =============================================
-define('MAX_FILE_SIZE_MB', 10);
+define('MAX_FILE_SIZE_MB', (int)($_ENV['MAX_FILE_SIZE_MB'] ?? 10));
 define('MAX_FILE_SIZE',    MAX_FILE_SIZE_MB * 1024 * 1024);
 
 define('ALLOWED_INPUT_FORMATS',  ['jpg', 'jpeg', 'png', 'webp']);
 define('ALLOWED_OUTPUT_FORMATS', ['jpg', 'png', 'webp']);
 
-// Mapping MIME type ke format
 define('MIME_TO_EXT', [
     'image/jpeg' => 'jpg',
     'image/png'  => 'png',

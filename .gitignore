@@ -1,0 +1,8 @@
+# Environment files — jangan pernah di-commit
+client/.env
+server/.env
+
+# Hasil konversi gambar
+server/uploads/*
+!server/uploads/.gitkeep
+!server/uploads/.gitignore

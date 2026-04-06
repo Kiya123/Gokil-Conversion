@@ -3,48 +3,58 @@
 /**
  * config.php — Client Configuration
  *
- * ┌─────────────────────────────────────────────────────┐
- * │              TOGGLE MODE KONEKSI                     │
- * │                                                      │
- * │  'local'  → LAN via hotspot HP (IP langsung)         │
- * │  'ngrok'  → Ngrok tunnel (HTTPS publik)              │
- * └─────────────────────────────────────────────────────┘
- *
- * Cara jalankan client: php -S localhost:3000 (dari folder /client)
+ * Semua config dibaca dari file .env di folder ini.
+ * Cara setup: copy .env.example → .env, lalu isi nilainya.
+ * Cara jalankan: php -S localhost:3000 (dari folder /client)
  */
 
 // =============================================
-//  ★ TOGGLE DI SINI — 'local' atau 'ngrok'
+//  ENV LOADER — parser .env sederhana
 // =============================================
-define('CONNECTION_MODE', 'ngrok');
+
+$envPath = __DIR__ . '/.env';
+
+if (!file_exists($envPath)) {
+    die(
+        "<pre style='font-family:monospace;padding:20px;background:#1a1a2e;color:#ef4444;'>" .
+        "⚠️  File .env tidak ditemukan!\n\n" .
+        "Jalankan perintah ini di folder /client:\n" .
+        "  cp .env.example .env\n\n" .
+        "Lalu edit .env sesuai kebutuhan.\n" .
+        "</pre>"
+    );
+}
+
+foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+    $line = trim($line);
+    if ($line === '' || str_starts_with($line, '#')) continue;
+    if (!str_contains($line, '=')) continue;
+    [$key, $val] = explode('=', $line, 2);
+    $_ENV[trim($key)] = trim($val);
+}
 
 // =============================================
-//  MODE 1: LOCAL — LAN via Hotspot HP
-//  Pastikan kedua laptop konek ke HP yang sama.
-//  Cara cari IP Azkiya: CMD → ipconfig → IPv4 Address
+//  RESOLVE CONFIG DARI ENV
 // =============================================
-define('LOCAL_SERVER_IP',   '192.168.1.100');  // ← Ganti sesuai IP laptop Azkiya
-define('LOCAL_SERVER_PORT', 80);
-define('LOCAL_ENDPOINT',    'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/server/api/upload.php');
 
-// =============================================
-//  MODE 2: NGROK — Tunnel HTTPS publik
-//  Cara pakai:
-//   1. Di laptop Azkiya: ngrok http 80
-//   2. Copy URL yang muncul (misal: https://xxxx-xx-xx.ngrok-free.app)
-//   3. Paste ke NGROK_BASE_URL di bawah (tanpa trailing slash)
-// =============================================
-define('NGROK_BASE_URL',  'https://70fd-140-213-10-149.ngrok-free.app');  // ← Ganti tiap sesi ngrok baru
-define('NGROK_ENDPOINT',  NGROK_BASE_URL . '/gokil-conversion/server/api/upload.php');
+$mode = $_ENV['CONNECTION_MODE'] ?? 'local';
+define('CONNECTION_MODE', $mode);
 
-// =============================================
-//  RESOLVE ENDPOINT AKTIF (jangan diubah)
-// =============================================
-define('SERVER_ENDPOINT', CONNECTION_MODE === 'ngrok' ? NGROK_ENDPOINT : LOCAL_ENDPOINT);
+// Mode LOCAL
+define('LOCAL_SERVER_IP',   $_ENV['LOCAL_SERVER_IP']   ?? '192.168.1.100');
+define('LOCAL_SERVER_PORT', (int)($_ENV['LOCAL_SERVER_PORT'] ?? 80));
+define('LOCAL_ENDPOINT',    'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/gokil-conversion/server/api/upload.php');
 
-// Untuk ditampilkan di UI (index.php)
+// Mode NGROK
+define('NGROK_BASE_URL', rtrim($_ENV['NGROK_BASE_URL'] ?? '', '/'));
+define('NGROK_ENDPOINT', NGROK_BASE_URL . '/gokil-conversion/server/api/upload.php');
+
+// Endpoint aktif
+define('SERVER_ENDPOINT', $mode === 'ngrok' ? NGROK_ENDPOINT : LOCAL_ENDPOINT);
+
+// Label untuk UI
 define('ACTIVE_SERVER_LABEL',
-    CONNECTION_MODE === 'ngrok'
+    $mode === 'ngrok'
         ? 'Ngrok · ' . NGROK_BASE_URL
         : 'LAN · ' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT
 );
@@ -52,8 +62,8 @@ define('ACTIVE_SERVER_LABEL',
 // =============================================
 //  FILE VALIDATION
 // =============================================
-define('MAX_FILE_SIZE_MB', 10);
-define('MAX_FILE_SIZE',    MAX_FILE_SIZE_MB * 1024 * 1024); // dalam bytes
+define('MAX_FILE_SIZE_MB', (int)($_ENV['MAX_FILE_SIZE_MB'] ?? 10));
+define('MAX_FILE_SIZE',    MAX_FILE_SIZE_MB * 1024 * 1024);
 
 define('ALLOWED_INPUT_FORMATS',  ['jpg', 'jpeg', 'png', 'webp']);
 define('ALLOWED_OUTPUT_FORMATS', ['jpg', 'png', 'webp']);
@@ -61,5 +71,4 @@ define('ALLOWED_OUTPUT_FORMATS', ['jpg', 'png', 'webp']);
 // =============================================
 //  CURL TIMEOUT
 // =============================================
-// Ngrok agak lebih lambat karena lewat internet, kasih slack lebih
-define('CURL_TIMEOUT_SEC', CONNECTION_MODE === 'ngrok' ? 60 : 30);
+define('CURL_TIMEOUT_SEC', (int)($_ENV['CURL_TIMEOUT_SEC'] ?? ($mode === 'ngrok' ? 60 : 30)));
