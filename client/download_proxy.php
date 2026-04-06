@@ -23,9 +23,9 @@ if (empty($filename)) {
     die('Parameter "file" tidak ada.');
 }
 
-// Sanitasi: hanya izinkan karakter aman (cegah path traversal)
+// Sanitasi: izinkan huruf, angka, spasi, underscore, dash, titik (cegah path traversal)
 $filename = basename($filename);
-if (!preg_match('/^[\w\-\.]+$/', $filename)) {
+if (!preg_match('/^[\w\-\. ]+$/u', $filename)) {
     http_response_code(400);
     die('Nama file tidak valid.');
 }
@@ -41,11 +41,13 @@ if (!in_array($ext, ['jpg', 'jpeg', 'png', 'webp'])) {
 //  BUILD URL FILE DI SERVER
 // =============================================
 
-// Resolve base URL server sesuai mode koneksi
+// Encode spasi di nama file agar URL valid
+$encodedFilename = rawurlencode($filename);
+
 if (CONNECTION_MODE === 'ngrok') {
-    $fileUrl = NGROK_BASE_URL . '/gokil-conversion/server/uploads/' . $filename;
+    $fileUrl = NGROK_BASE_URL . '/gokil-conversion/server/uploads/' . $encodedFilename;
 } else {
-    $fileUrl = 'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/gokil-conversion/server/uploads/' . $filename;
+    $fileUrl = 'http://' . LOCAL_SERVER_IP . ':' . LOCAL_SERVER_PORT . '/gokil-conversion/server/uploads/' . $encodedFilename;
 }
 
 // =============================================
@@ -65,7 +67,6 @@ curl_setopt_array($ch, [
 
 $fileData  = curl_exec($ch);
 $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-$mimeType  = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 $curlError = curl_error($ch);
 curl_close($ch);
 
@@ -83,7 +84,6 @@ if ($httpCode !== 200) {
 //  STREAM KE BROWSER SEBAGAI DOWNLOAD
 // =============================================
 
-// Pastikan MIME type valid (fallback ke octet-stream kalau tidak dikenal)
 $safeMime = match($ext) {
     'jpg', 'jpeg' => 'image/jpeg',
     'png'         => 'image/png',
