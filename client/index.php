@@ -32,6 +32,13 @@
 
   <?php require_once __DIR__ . '/components/loading_overlay.php'; ?>
 
-  <script src="assets/app.js"></script>
+  <!-- JS: load berurutan (dom → utils → ui → file → dragdrop → format → convert) -->
+  <script defer src="assets/js/dom.js"></script>
+  <script defer src="assets/js/utils.js"></script>
+  <script defer src="assets/js/ui.js"></script>
+  <script defer src="assets/js/file.js"></script>
+  <script defer src="assets/js/dragdrop.js"></script>
+  <script defer src="assets/js/format.js"></script>
+  <script defer src="assets/js/convert.js"></script>
 </body>
 </html>
