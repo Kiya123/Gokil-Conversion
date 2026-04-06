@@ -231,12 +231,18 @@ function showResult(data) {
     statCompression.textContent = 'Sama';
   }
 
-  btnDownload.href = data.download_url;
+  // Arahkan ke proxy lokal (localhost) bukan langsung ke ngrok
+  // Ini bypass ngrok browser warning dan langsung trigger download
+  const proxyUrl = `download_proxy.php?file=${encodeURIComponent(data.converted_filename)}`;
+  btnDownload.href = proxyUrl;
+  btnDownload.removeAttribute('target'); // jangan buka tab baru
+
   showElement(resultCard);
 
   // Scroll ke result
   resultCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
 
 function showError(message) {
   errorMsg.textContent = message;
