@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 3rem;
   margin-top: 0.5rem;
   padding: 1.25rem;
   background: var(--bg-card);
@@ -19,13 +19,20 @@
 }
 
 .node-dot {
-  width: 10px; height: 10px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.client-dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-.server-dot { background: var(--accent-2); box-shadow: 0 0 10px var(--accent-2); }
+.client-dot {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.server-dot {
+  background: var(--accent-2);
+  box-shadow: 0 0 10px var(--accent-2);
+}
 
 .node-label {
   display: block;
@@ -57,11 +64,13 @@
 }
 
 .arrow-line::after {
-  content: '';
+  content: "";
   position: absolute;
-  right: 0; top: 50%;
+  right: 0;
+  top: 50%;
   transform: translateY(-50%);
-  width: 0; height: 0;
+  width: 0;
+  height: 0;
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
   border-left: 6px solid var(--accent-2);
