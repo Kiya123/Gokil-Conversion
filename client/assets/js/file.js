@@ -63,5 +63,7 @@ btnClear.addEventListener('click', (e) => {
 
 dropZone.addEventListener('click', (e) => {
   if (e.target === btnClear || btnClear.contains(e.target)) return;
+  // Label .btn-browse sudah trigger fileInput secara native — jangan double-trigger
+  if (e.target.closest('.btn-browse')) return;
   if (!selectedFile) fileInput.click();
 });
