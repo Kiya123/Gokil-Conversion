@@ -13,7 +13,7 @@
   <div class="error-checklist">
     <p class="checklist-title">Checklist:</p>
     <ul>
-      <li>Pastikan server Azkiya nyala dan Apache running di XAMPP</li>
+      <li>Pastikan server Dier nyala dan Apache running di XAMPP</li>
       <li>Cek IP server di <code>config.php</code> sudah benar</li>
       <li>Coba ping IP server dari CMD dulu</li>
       <li>Pastikan port 80 tidak diblokir firewall Windows</li>

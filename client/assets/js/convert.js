@@ -6,7 +6,7 @@ btnConvert.addEventListener('click', async () => {
   hideElement(resultCard);
   hideElement(errorCard);
   showElement(loadingOverlay);
-  loadingSub.textContent = 'Mengirim file ke server Azkiya...';
+  loadingSub.textContent = 'Mengirim file ke server Dier...';
 
   const formData = new FormData();
   formData.append('image', selectedFile, selectedFile.name);

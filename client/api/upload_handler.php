@@ -4,7 +4,7 @@
  * upload_handler.php — PHP Proxy
  *
  * Menerima FormData dari browser (app.js),
- * lalu forward ke server Azkiya pakai cURL.
+ * lalu forward ke server Dier pakai cURL.
  * Ini yang bikin Node 1 tetap "berperan" secara teknis —
  * bukan cuma static file server biasa.
  */
@@ -49,7 +49,7 @@ if (!in_array($targetFormat, ALLOWED_OUTPUT_FORMATS)) {
 }
 
 // =============================================
-//  FORWARD KE SERVER AZKIYA VIA CURL
+//  FORWARD KE SERVER DIER VIA CURL
 // =============================================
 
 $result = curlPost(
@@ -73,7 +73,7 @@ $result = curlPost(
 if ($result['body'] === false) {
     echo json_encode([
         'success' => false,
-        'message' => "Proxy gagal konek ke server Azkiya ({$result['error']}). Pastikan server nyala dan IP di config sudah benar."
+        'message' => "Proxy gagal konek ke server Dier ({$result['error']}). Pastikan server nyala dan IP di config sudah benar."
     ]);
     exit;
 }
@@ -81,7 +81,7 @@ if ($result['body'] === false) {
 if ($result['status'] !== 200) {
     echo json_encode([
         'success' => false,
-        'message' => "Server Azkiya merespons HTTP {$result['status']}. Cek Apache/XAMPP di laptop Azkiya."
+        'message' => "Server Dier merespons HTTP {$result['status']}. Cek Apache/XAMPP di laptop Dier."
     ]);
     exit;
 }

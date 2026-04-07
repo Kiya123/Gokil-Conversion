@@ -4,7 +4,7 @@
  * env_loader.php — Minimal .env Parser (Server)
  *
  * Sama persis dengan versi client. Dipisah agar server
- * bisa berdiri sendiri di mesin berbeda (laptop Azkiya).
+ * bisa berdiri sendiri di mesin berbeda (laptop Dier).
  *
  * Usage: loadEnv(__DIR__ . '/../.env');
  */

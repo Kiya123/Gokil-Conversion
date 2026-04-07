@@ -1,15 +1,15 @@
 # **👥 Pembagian Tugas (Separation of Concern)**
 
-Biar pembagian kerja lu dan Azkiya kelihatan profesional di mata Ibu Lilis.
+Biar pembagian kerja lu dan Dier kelihatan profesional di mata Ibu Lilis.
 
-## **🛠️ Dier (Lead System Architect & Client-Side)**
+## **🛠️ Azkiya (Lead System Architect & Client-Side)**
 
 * **System Design:** Merancang alur komunikasi antar *node* dan topologi jaringan.  
 * **Client Development:** Membangun script **PHP CLI** yang berjalan di terminal — bukan browser.  
-* **HTTP Communication:** Mengimplementasikan **cURL** di PHP buat kirim `multipart/form-data` ke server Azkiya.  
+* **HTTP Communication:** Mengimplementasikan **cURL** di PHP buat kirim `multipart/form-data` ke server Dier.  
 * **Network Setup:** Bertanggung jawab atas konektivitas antar perangkat dan bypass firewall.
 
-## **⚙️ Azkiya (Lead Back-End & Database)**
+## **⚙️ Dier (Lead Back-End & Database)**
 
 * **API Development:** Membangun **REST API** menggunakan PHP murni untuk menangani *upload* dan *processing*.  
 * **Data Processing Logic:** Mengimplementasikan **GD Library** untuk konversi dan kompresi gambar di sisi server.  
