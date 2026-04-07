@@ -1,0 +1,13 @@
+/* style.css — Entry Point
+   Semua CSS dipecah per section di folder css/.
+   Ubah urutan import kalau ada dependency antar file. */
+
+@import url('./css/base.css');
+@import url('./css/backgrounds.css');
+@import url('./css/header.css');
+@import url('./css/hero.css');
+@import url('./css/converter.css');
+@import url('./css/results.css');
+@import url('./css/arch.css');
+@import url('./css/loading.css');
+@import url('./css/responsive.css');

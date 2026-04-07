@@ -15,7 +15,7 @@ PHP di XAMPP itu ibarat **Panci Presto**. Sangat cepat dan praktis untuk masak *
 ## **💥 Impact ke Arsitektur Sistem**
 
 * **Skenario Demo UAS (Aman):** 100% lancar. Hanya **satu client** (laptop lu) yang kirim *request* ke server.  
-* **Skenario Real-World (Hancur):** Bakal **Mati Kutu**. CPU laptop Azkiya bakal *overload* menahan antrean *concurrent requests*.
+* **Skenario Real-World (Hancur):** Bakal **Mati Kutu**. CPU laptop Dier bakal *overload* menahan antrean *concurrent requests*.
 
 ## **⚔️ Langkah Taktis Presentasi UTS**
 
